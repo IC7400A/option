@@ -2,264 +2,148 @@ import sys
 import os
 import math
 
+class Calculator:
+    @staticmethod
+    def get_input(prompt=""):
+        """Get user input with a prompt."""
+        return input(prompt)
 
-__name__ == "__main__"
-
-
-class index(float) :
-    def scan():
-        sc = input("")
-        return sc    
-
-class sum(index):
-
- def main():
-  while(True):
-    print("enter numbers which you want to add :~~")
-    a = index.scan()
-    print("+")
-    b = index.scan()
-    c = float(a) + float(b)
-    print("=   " , c)
-    
-    print("do you want to quit or you want to go to the menu(if yes enter 'y' else enter 'n' )" + "(for menu enter m)")
-    str = index.scan()
-    if str == "y":
-      print("Bye :)")
-      exit(0)
-
-    elif str == "n":
-        continue
-
-    elif str == "m":
-       os.execv(sys.executable, ['python3'] + sys.argv)
-       
-     
-
-    else:
-        print("Wrong Input :(")
-        print("try again :)")
-        exit(0)
-
-
-class diff(index):
-
- def main():
-  while(True):
-    print("enter numbers which you want to subtract :~~")
-    a = index.scan()
-    print("-")
-    b = index.scan()
-    c = float(a) - float(b)
-    print("=   " , c)
-    
-    print("do you want to quit or you want to go to the menu(if yes enter 'y' else enter 'n' )" + "(for menu enter m)")
-    str = index.scan()
-    if str == "y":
-      exit(0)
-
-    elif str == "n":
-        continue
-
-    elif str == "m":
-       os.execv(sys.executable, ['python3'] + sys.argv)
-       
-
-    else:
-        print("Wrong Input :(")
-        print("try again :)")
-        exit(0)
-
-
-class divide(index):
-
- def main():
-  while(True):
-    print("enter the two want to divide billow :~~")
-    a = index.scan()
-    print("/")
-    b = index.scan()
-    c = float(a) / float(b)
-    print("=   " , c)
-    
-    print("do you want to quit or you want to go to the menu(if yes enter 'y' else enter 'n' )" + "(for menu enter m)")
-    str = index.scan()
-    if str == "y":
-      print("Bye :)")
-      exit(0)
-
-    elif str == "n":
-        continue
-
-    elif str == "m":
-       os.execv(sys.executable, ['python3'] + sys.argv)
-       
-     
-
-    else:
-        print("Wrong Input :(")
-        print("try again :)")
-        exit(0)
-
-
-class multiply(index):
-
- def main():
-  while(True):
-    print("enter the number want to multiply billow :~~")
-    a = index.scan()
-    print("x")
-    b = index.scan()
-    c = float(a) * float(b)
-    print("=   " , c)
-    
-    print("do you want to quit or you want to go to the menu(if yes enter 'y' else enter 'n' )" + "(for menu enter m)")
-    str = index.scan()
-    if str == "y":
-      print("Bye :)")
-      exit(0)
-
-    elif str == "n":
-        continue
-
-    elif str == "m":
-       os.execv(sys.executable, ['python3'] + sys.argv)
-       
-     
-
-    else:
-        print("Wrong Input :(")
-        print("try again :)")
-        exit(0)
-
-
-class evenOdd(index):
-
- def main():
-  while(True):
-    print("enter the number you want to check :~~ ")
-    a = int(index.scan())
-    if (a % 2) == 0 :
-       print(a, " is even")
-    else :
-       print(a, " is odd")
-    
-    print("do you want to quit or you want to go to the menu(if yes enter 'y' else enter 'n' )" + "(for menu enter m)")
-    str = index.scan()
-    if str == "y":
-      print("Bye :)")
-      exit(0)
-
-    elif str == "n":
-        continue
-
-    elif str == "m":
-       os.execv(sys.executable, ['python3'] + sys.argv)
-       
-     
-
-    else:
-        print("Wrong Input :(")
-        print("try again :)")
-        exit(0)
-
-
-class factorial(index):
-
- def main():
-  while(True):
-    print("enter the number want to calculate the factorial of :~~")
-    a = int(index.scan())
-    facto = math.factorial(a)
-    print("factorial of ",a,"=  " , facto)
-    print("do you want to quit or you want to go to the menu(if yes enter 'y' else enter 'n' )" + "(for menu enter m)")
-    str = index.scan()
-    if str == "y":
-      print("Bye :)")
-      exit(0)
-
-    elif str == "n":
-        continue
-
-    elif str == "m":
-       os.execv(sys.executable, ['python3'] + sys.argv)
-       
-     
-
-    else:
-        print("Wrong Input :(")
-        print("try again :)")
-        exit(0)
-
-
-class option(index):
- 
- def option():
-    print("lets do some calculations")
-    print("what do you want to do ")
-    print("Here are your options")
-    print("0- Exit")
-    print("1- Sum")
-    print("2- Difference")
-    print("3- Divide")
-    print("4- Multiply")
-    print("5- Check even or odd")
-    print("6- To calculate factorial")
-    print("enter any number listed above to continue :)")
-
-    a = index.scan()
-
-    while(True):
-        if a == "0":
-            print("Bye :) ")
-            exit(0)
-            
-        elif a == "1":
-             print("ok, good choice. Lets do some additions :)")
-             exec(sum.main())
-
-            
-        elif a == "2":
-             print("ok, good choice lets find some difference  ;) ")
-             exec(diff.main())
-
-        elif a == "3":
-             print("ok, good choice lets do some divisions  :] ")
-             exec(divide.main())
-
-        elif a == "4":
-             print("ok, good choice lets do some multiplication :) ")
-             exec(multiply.main())
-
-        elif a == "5":
-             print("lets check even odd")
-             exec(evenOdd.main())
-
-        elif a == "6":
-             print("Factorials ! cool !")
-             exec(factorial.main())
-
+    @staticmethod
+    def ask_to_continue():
+        """Ask the user if they want to quit, continue or return to the menu."""
+        print("Do you want to quit or go to the menu? (Enter 'y' to quit, 'n' to continue, 'm' for menu):")
+        user_input = Calculator.get_input()
+        if user_input == "y":
+            print("Goodbye :)")
+            sys.exit(0)
+        elif user_input == "n":
+            return True
+        elif user_input == "m":
+            option.show_menu()
+            return False
         else:
-             print("Invalid Input :(")
-             os.execv(sys.executable, ['python3'] + sys.argv)
-            
-                
+            print("Invalid input. Please try again.")
+            return False
 
-        
- option()   
-       
+class Sum(Calculator):
+    @staticmethod
+    def perform():
+        """Perform the addition operation."""
+        while True:
+            print("Enter the numbers to add: ")
+            a = float(Calculator.get_input())
+            print("+")
+            b = float(Calculator.get_input())
+            result = a + b
+            print(f"= {result}")
+            if not Calculator.ask_to_continue():
+                return
 
-        
-            
-            
+class Difference(Calculator):
+    @staticmethod
+    def perform():
+        """Perform the subtraction operation."""
+        while True:
+            print("Enter the numbers to subtract: ")
+            a = float(Calculator.get_input())
+            print("-")
+            b = float(Calculator.get_input())
+            result = a - b
+            print(f"= {result}")
+            if not Calculator.ask_to_continue():
+                return
 
+class Division(Calculator):
+    @staticmethod
+    def perform():
+        """Perform the division operation."""
+        while True:
+            print("Enter the numbers to divide: ")
+            a = float(Calculator.get_input())
+            print("/")
+            b = float(Calculator.get_input())
+            if b == 0:
+                print("Cannot divide by zero. Please try again.")
+                continue
+            result = a / b
+            print(f"= {result}")
+            if not Calculator.ask_to_continue():
+                return
 
+class Multiplication(Calculator):
+    @staticmethod
+    def perform():
+        """Perform the multiplication operation."""
+        while True:
+            print("Enter the numbers to multiply: ")
+            a = float(Calculator.get_input())
+            print("x")
+            b = float(Calculator.get_input())
+            result = a * b
+            print(f"= {result}")
+            if not Calculator.ask_to_continue():
+                return
 
+class EvenOdd(Calculator):
+    @staticmethod
+    def perform():
+        """Check if a number is even or odd."""
+        while True:
+            print("Enter the number to check:")
+            number = int(Calculator.get_input())
+            result = "even" if number % 2 == 0 else "odd"
+            print(f"{number} is {result}.")
+            if not Calculator.ask_to_continue():
+                return
 
+class Factorial(Calculator):
+    @staticmethod
+    def perform():
+        """Calculate the factorial of a number."""
+        while True:
+            print("Enter the number to calculate its factorial:")
+            number = int(Calculator.get_input())
+            result = math.factorial(number)
+            print(f"Factorial of {number} = {result}")
+            if not Calculator.ask_to_continue():
+                return
 
+class Option:
+    @staticmethod
+    def show_menu():
+        """Display the main menu and handle user choices."""
+        print("Let's do some calculations!")
+        print("What do you want to do?")
+        print("Here are your options:")
+        print("0 - Exit")
+        print("1 - Sum")
+        print("2 - Difference")
+        print("3 - Divide")
+        print("4 - Multiply")
+        print("5 - Check even or odd")
+        print("6 - Calculate factorial")
+        print("Enter any number listed above to continue:")
 
+        choice = Calculator.get_input()
 
+        if choice == "0":
+            print("Goodbye! :)")
+            sys.exit(0)
+        elif choice == "1":
+            Sum.perform()
+        elif choice == "2":
+            Difference.perform()
+        elif choice == "3":
+            Division.perform()
+        elif choice == "4":
+            Multiplication.perform()
+        elif choice == "5":
+            EvenOdd.perform()
+        elif choice == "6":
+            Factorial.perform()
+        else:
+            print("Invalid input. Please try again.")
+            Option.show_menu()
 
-
-
-
+# Start the program
+Option.show_menu()
