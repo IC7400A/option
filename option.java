@@ -1,22 +1,27 @@
 import java.util.Scanner;
 import java.math.BigInteger;
 
-/**
- * Base class for shared functionality like the scanner object.
- */
-class MainMenu {
-  public static final Scanner scanner = new Scanner(System.in);
+// Base class for shared functionality like the scanner object
+class BaseMenu {
+  public static Scanner scanner = new Scanner(System.in);
 
-  /**
-   * Handles continuation options for the user.
-   *
-   * @return true if the user wants to continue, false otherwise.
-   */
-  public static boolean handleContinuation() {
+  // Helper method to read float input (avoids repetition)
+  public static float getFloatInput(String prompt) {
+    System.out.println(prompt);
+    return scanner.nextFloat();
+  }
+
+  // Helper method to read int input (avoids repetition)
+  public static int getIntInput(String prompt) {
+    System.out.println(prompt);
+    return scanner.nextInt();
+  }
+  
+  // Helper method to handle continuation logic
+  public static boolean shouldContinue() {
     System.out.println("Do you want to quit (y), continue (n), or return to the menu (m)?");
-    String input = scanner.next();
-
-    switch (input.toLowerCase()) {
+    String choice = scanner.next().toLowerCase();
+    switch (choice) {
       case "y":
         System.out.println("Goodbye!");
         System.exit(0);
@@ -24,31 +29,25 @@ class MainMenu {
       case "n":
         return true;
       case "m":
-        CalculatorMenu.displayMenu();
+        CalculatorMenu.displayMainMenu();
         return false;
       default:
         System.out.println("Invalid input. Returning to menu.");
-        CalculatorMenu.displayMenu();
+        CalculatorMenu.displayMainMenu();
         return false;
     }
   }
 }
 
-/**
- * Class to handle the main calculator menu and user interactions.
- */
-class CalculatorMenu extends MainMenu {
+// Main menu that directs the user to the appropriate operation
+class CalculatorMenu extends BaseMenu {
   public static void main(String[] args) {
-    displayMenu();
+    displayMainMenu();
   }
 
-  /**
-   * Displays the main menu and handles user input.
-   */
-  public static void displayMenu() {
+  public static void displayMainMenu() {
     System.out.println("Let's do some calculations!");
     System.out.println("What do you want to do?");
-    System.out.println("Here are your options:");
     System.out.println("0 - Exit");
     System.out.println("1 - Addition");
     System.out.println("2 - Subtraction");
@@ -56,157 +55,93 @@ class CalculatorMenu extends MainMenu {
     System.out.println("4 - Multiplication");
     System.out.println("5 - Check Even or Odd");
     System.out.println("6 - Calculate Factorial");
-    System.out.print("Enter any number listed above to continue: ");
-    String choice = scanner.next();
+    System.out.println("Enter a number listed above to continue:");
 
-    // Handle user input using switch statement
-    switch (choice) {
+    String userChoice = scanner.next();
+
+    // Redirect to the appropriate operation
+    switch (userChoice) {
       case "0":
         System.out.println("Goodbye!");
         System.exit(0);
         break;
       case "1":
-        Addition.performOperation();
+        performAddition();
         break;
       case "2":
-        Subtraction.performOperation();
+        performSubtraction();
         break;
       case "3":
-        Division.performOperation();
+        performDivision();
         break;
       case "4":
-        Multiplication.performOperation();
+        performMultiplication();
         break;
       case "5":
-        EvenOddChecker.checkEvenOdd();
+        checkEvenOdd();
         break;
       case "6":
-        FactorialCalculator.calculateFactorial();
+        calculateFactorial();
         break;
       default:
-        System.out.println("Invalid input. Please try again.");
-        displayMenu();
+        System.out.println("Invalid input. Please try again:");
+        displayMainMenu();
         break;
     }
   }
-}
 
-/**
- * Abstract class for operations that involve two numbers.
- */
-abstract class Operation extends MainMenu {
-  /**
-   * Performs an operation that involves two numbers.
-   *
-   * @param operationName the name of the operation to perform.
-   * @return true if the operation was successful, false otherwise.
-   */
-  public static boolean performOperation(String operationName) {
-    System.out.println("Enter the first number:");
-    float num1 = scanner.nextFloat();
-    System.out.println("Enter the second number:");
-    float num2 = scanner.nextFloat();
+  // Perform addition
+  public static void performAddition() {
+    float num1 = getFloatInput("Enter the first number:");
+    float num2 = getFloatInput("Enter the second number:");
+    System.out.println("The sum of " + num1 + " and " + num2 + " is: " + (num1 + num2));
+    if (!shouldContinue()) return;
+  }
 
-    switch (operationName) {
-      case "Addition":
-        System.out.println("The sum is: " + (num1 + num2));
-        break;
-      case "Subtraction":
-        System.out.println("The difference is: " + (num1 - num2));
-        break;
-      case "Multiplication":
-        System.out.println("The product is: " + (num1 * num2));
-        break;
-      case "Division":
-        if (num2 == 0) {
-          System.out.println("Division by zero is not allowed.");
-          return false;
-        } else {
-          System.out.println("The quotient is: " + (num1 / num2));
-          break;
-        }
-      default:
-        return false;
+  // Perform subtraction
+  public static void performSubtraction() {
+    float num1 = getFloatInput("Enter the number to subtract from:");
+    float num2 = getFloatInput("Enter the number to subtract:");
+    System.out.println("The difference between " + num1 + " and " + num2 + " is: " + (num1 - num2));
+    if (!shouldContinue()) return;
+  }
+
+  // Perform division
+  public static void performDivision() {
+    float num1 = getFloatInput("Enter the dividend:");
+    float num2 = getFloatInput("Enter the divisor:");
+    if (num2 == 0) {
+      System.out.println("Division by zero is not allowed.");
+      performDivision();  // Retry division
+      return;
     }
-    return handleContinuation();
+    System.out.println("The quotient is: " + (num1 / num2));
+    if (!shouldContinue()) return;
   }
-}
 
-/**
- * Class to perform addition operations.
- */
-class Addition extends Operation {
-  public static void performOperation() {
-    performOperation("Addition");
+  // Perform multiplication
+  public static void performMultiplication() {
+    float num1 = getFloatInput("Enter the first number:");
+    float num2 = getFloatInput("Enter the second number:");
+    System.out.println("The product of " + num1 + " and " + num2 + " is: " + (num1 * num2));
+    if (!shouldContinue()) return;
   }
-}
 
-/**
- * Class to perform subtraction operations.
- */
-class Subtraction extends Operation {
-  public static void performOperation() {
-    performOperation("Subtraction");
-  }
-}
-
-/**
- * Class to perform division operations.
- */
-class Division extends Operation {
-  public static void performOperation() {
-    performOperation("Division");
-  }
-}
-
-/**
- * Class to perform multiplication operations.
- */
-class Multiplication extends Operation {
-  public static void performOperation() {
-    performOperation("Multiplication");
-  }
-}
-
-/**
- * Class to check whether a number is even or odd.
- */
-class EvenOddChecker extends MainMenu {
-  /**
-   * Checks whether a number is even or odd.
-   */
+  // Check if a number is even or odd
   public static void checkEvenOdd() {
-    System.out.println("Enter a number to check if it's even or odd:");
-    int number = scanner.nextInt();
-
-    if (number % 2 == 0) {
-      System.out.println(number + " is even.");
-    } else {
-      System.out.println(number + " is odd.");
-    }
-
-    handleContinuation();
+    int number = getIntInput("Enter a number to check if it's even or odd:");
+    System.out.println(number + (number % 2 == 0 ? " is even." : " is odd."));
+    if (!shouldContinue()) return;
   }
-}
 
-/**
- * Class to calculate the factorial of a number.
- */
-class FactorialCalculator extends MainMenu {
-  /**
-   * Calculates the factorial of a number.
-   */
+  // Calculate factorial
   public static void calculateFactorial() {
-    System.out.println("Enter a number to calculate its factorial:");
     long number = scanner.nextLong();
-
-    // Calculate factorial using BigInteger for large numbers
     BigInteger factorial = BigInteger.ONE;
     for (long i = 1; i <= number; i++) {
       factorial = factorial.multiply(BigInteger.valueOf(i));
     }
-
     System.out.println("The factorial of " + number + " is: " + factorial);
-    handleContinuation();
+    if (!shouldContinue()) return;
   }
 }
