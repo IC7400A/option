@@ -1,287 +1,126 @@
-import java.math.*
+import java.math.BigInteger
 import java.util.*
-import index.sc
 
 internal object index {
-    var sc = Scanner(System.`in`)
+    val sc = Scanner(System.`in`)
 }
 
-fun main(args: Array<String>){
+fun main() {
     option.main()
 }
 
-
-internal object option{
+internal object option {
     @JvmStatic
     fun main(args: Array<String>) {
-        main()
+        showMainMenu()
     }
 
-    // Class for menu operations .
-    fun main() {
-        // This is the menu
-        println("lets do some calculations")
-        println("what do you want to do ")
-        println("Here are your options")
-        println("0- Exit")
-        println("1- Sum")
-        println("2- Difference")
-        println("3- Divide")
-        println("4- Multiply")
-        println("5- Check even or odd")
-        println("6- To calculate factorial")
-        println("enter any number listed above to continue :)")
-        val i = sc.next()
+    // Function to display the main menu and handle user input
+    private fun showMainMenu() {
+        println("Let's do some calculations!")
+        println("What do you want to do?")
+        println("Here are your options:")
+        println("0 - Exit")
+        println("1 - Sum")
+        println("2 - Difference")
+        println("3 - Divide")
+        println("4 - Multiply")
+        println("5 - Check even or odd")
+        println("6 - Calculate factorial")
+        println("Enter a number listed above to continue:")
 
+        val choice = sc.next()
 
-        // Menu operations .
-        while (true) {
-            if(i == "0") {
-                println("Bye :)")
+        when (choice) {
+            "0" -> exitProgram()
+            "1" -> performOperation("add")
+            "2" -> performOperation("subtract")
+            "3" -> performOperation("divide")
+            "4" -> performOperation("multiply")
+            "5" -> checkEvenOdd()
+            "6" -> calculateFactorial()
+            else -> {
+                println("Invalid input. Please try again.")
+                showMainMenu()
+            }
+        }
+    }
+
+    // Exit the program
+    private fun exitProgram() {
+        println("Goodbye! :)")
+        System.exit(0)
+    }
+
+    // Ask if the user wants to continue, return to the menu, or exit
+    private fun shouldContinue(): Boolean {
+        println("Do you want to quit (y), continue (n), or return to the menu (m)?")
+        val choice = sc.next().lowercase()
+        return when (choice) {
+            "y" -> {
+                println("Goodbye! :)")
                 System.exit(0)
-                break
-            } else if(i == "1") {
-                println("ok, good choice. Lets do some additions :)")
-                try {
-                    plus.main()
-                    break
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            } else if(i == "2") {
-                println("ok, good choice lets find some difference  ;) ")
-                try {
-                    minus.main()
-                    break
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            } else if(i == "3") {
-                println("ok, good choice lets do some divisions  :]")
-                try {
-                    divide.main()
-                    break
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            } else if(i == "4") {
-                println("ok, good choice lets do some multiplication :{)")
-                try {
-                    multiply.main()
-                    break
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }  else if(i == "5") {
-                println("lets check even odd")
-                try {
-                    evenOdd.main()
-                    break
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            } else if(i == "6") {
-                println("Factorials ! cool ! ")
-                try {
-                    factorial.main()
-                    break
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-                // Invalid Input Detector
-            } else {
-                println("Invalid input   :(")
-                println("please try again :)")
-                main()
+                false
+            }
+            "n" -> true
+            "m" -> {
+                showMainMenu()
+                false
+            }
+            else -> {
+                println("Invalid input, returning to menu.")
+                showMainMenu()
+                false
             }
         }
     }
-}
 
-internal object plus{
-    // Class to add the numbers
-    fun main() {
-        while (true) {
-            println("enter the first no you want to add billow :~~")
-            val a = sc.nextInt().toFloat()
-            println("+")
-            val b = sc.nextInt().toFloat()
-            println("The sum of" + a + "and" + b + " is :~~")
-            val c = a + b
-            println("=   $c")
-            println("do you want to quit or you want to go to the menu(if yes enter 'y' else enter 'n' )" + "(for menu enter m)")
-            val dj = sc.next()
-            if (dj == "y") {
-                println("Bye :)")
-                break
-            } else if (dj == "n") {
-                println("welcome again :)")
-                continue
-            } else if (dj == "m") {
-                option.main()
-            } else {
-                println("invalid input")
-                println("try again!!")
-                break
+    // Perform addition, subtraction, multiplication, and division
+    private fun performOperation(operation: String) {
+        val num1 = getUserInput("Enter the first number:")
+        val num2 = getUserInput("Enter the second number:")
+        val result = when (operation) {
+            "add" -> num1 + num2
+            "subtract" -> num1 - num2
+            "multiply" -> num1 * num2
+            "divide" -> {
+                if (num2 == 0f) {
+                    println("Division by zero is not allowed.")
+                    performOperation("divide") // Retry division
+                    return
+                }
+                num1 / num2
             }
+            else -> 0f
         }
+
+        println("The result is: $result")
+        if (!shouldContinue()) return
     }
-}
 
-
-internal object minus{
-    // Minus class numbers
-    fun main() {
-        while (true) {
-            println("enter the first no from which you want to subtract :~~")
-            val a = sc.nextInt().toFloat()
-            println("-")
-            val b = sc.nextInt().toFloat()
-            println("$a - $b is :~~")
-            val c = a - b
-            println("=   $c")
-            println("do you want to quit or you want to go to the menu(if yes enter 'y' else enter 'n' )" + "(for menu enter m)")
-            val dj = sc.next()
-            if (dj == "y") {
-                println("Bye :)")
-                break
-            } else if (dj == "n") {
-                println("welcome again :)")
-                continue
-            } else if (dj == "m") {
-                option.main()
-            } else {
-                println("invalid input")
-                println("try again!!")
-                break
-            }
-        }
+    // Check if a number is even or odd
+    private fun checkEvenOdd() {
+        println("Enter a number to check:")
+        val number = sc.nextInt()
+        println("$number is ${if (number % 2 == 0) "even" else "odd"}.")
+        if (!shouldContinue()) return
     }
-}
 
-
-
-internal object divide{
-    // Class to divide numbers
-    fun main() {
-        while (true) {
-            println("enter the two want to divide billow :~~")
-            val a = sc.nextInt().toFloat()
-            println("enter the next no through which you want to divide:~~")
-            val b = sc.nextInt().toFloat()
-            println("$a / $b is :~~")
-            val c = a / b
-            println("=   $c")
-            println("do you want to quit or you want to go to the menu(if yes enter 'y' else enter 'n' )" + "( for menu enter m)")
-            val dj = sc.next()
-            if (dj == "y") {
-                println("Bye :)")
-                break
-            } else if (dj == "n") {
-                println("welcome again :)")
-                continue
-            } else if (dj == "m") {
-                option.main()
-            } else {
-                println("invalid input")
-                println("try again!!")
-                break
-            }
+    // Calculate factorial
+    private fun calculateFactorial() {
+        println("Enter a number to calculate its factorial:")
+        val number = sc.nextLong()
+        var factorial = BigInteger.ONE
+        for (i in 1..number) {
+            factorial = factorial.multiply(BigInteger.valueOf(i))
         }
+        println("The factorial of $number is: $factorial")
+        if (!shouldContinue()) return
     }
-}
 
-internal object multiply{
-    // Class for the multiplication option in the option main()
-    fun main() {
-        while (true) {
-            println("enter the number want to multiply billow :~~")
-            val a = sc.nextInt().toFloat()
-            println("enter the next no billow through which you want to multiply:~~")
-            val b = sc.nextInt().toFloat()
-            println("$a x $b is :~~")
-            val c = a * b
-            println("=   $c")
-            println("do you want to quit or you want to go to the menu(if yes enter 'y' else enter 'n' )" + "( for menu enter m)")
-            val dj = sc.next()
-            if (dj == "y") {
-                println("Bye :)")
-                break
-            } else if (dj == "n") {
-                println("welcome again :)")
-                continue
-            } else if (dj == "m") {
-                option.main()
-            } else {
-                println("invalid input")
-                println("try again!!")
-                break
-            }
-        }
-    }
-}
-
-
-
-internal object evenOdd{
-    // Class to check even or odd
-    fun main() {
-        while (true) {
-            println("enter the number you want to check")
-            val a = sc.nextInt()
-            if (a % 2 == 0) {
-                println(a.toString() + " is even")
-            } else {
-                println(a.toString() + " is odd")
-            }
-            println("do you want to quit or you want to go to the menu(if yes enter 'y' else enter 'n' )" + "(for menu enter m)")
-            val dj = sc.next()
-            if (dj == "y") {
-                println("Bye :)")
-                break
-            } else if (dj == "n") {
-                println("welcome again :)")
-                continue
-            } else if (dj == "m") {
-                option.main()
-            } else {
-                println("invalid input")
-                println("try again!!")
-                break
-            }
-        }
-    }
-}
-
-internal object factorial{
-    // Class to check factorial
-    fun main() {
-        while (true) {
-            println("enter the number want to calculate the factorial of :~~")
-            val number = sc.next().toLong()
-            var fact = BigInteger("1")
-            var i: Long
-            i = 1
-            while (i <= number) {
-                fact = fact.multiply(BigInteger.valueOf(i))
-                i++
-            }
-            println("The factorial of $number is :-  $fact")
-            println("do you want to quit or you want to go to the menu(if yes enter 'y' else enter 'n' )" + "( for menu enter m)")
-            val dj = sc.next()
-            if (dj == "y") {
-                println("Bye :)")
-                break
-            } else if (dj == "n") {
-                println("welcome again :)")
-                continue
-            } else if (dj == "m") {
-                option.main()
-            } else {
-                println("invalid input")
-                println("try again!!")
-                break
-            }
-        }
+    // Helper function to get user input for numbers
+    private fun getUserInput(prompt: String): Float {
+        println(prompt)
+        return sc.nextFloat()
     }
 }
